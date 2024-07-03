@@ -1,3 +1,9 @@
-FROM nginx:1.21.6
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM node:14.17.3-alpine3.14
+
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY ./server.js ./
+
+CMD ["npm","start"]
